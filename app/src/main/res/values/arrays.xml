@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 대분류 -->
+    <string-array name="categories">
+        <item>가구</item>
+        <item>가전제품</item>
+    </string-array>
+
+    <!-- 가구 소분류 (각 항목은 이름과 가격을 쉼표로 구분) -->
+    <string-array name="furniture_subcategories">
+        <item>소파,200.0</item>
+        <item>테이블,150.0</item>
+    </string-array>
+
+    <!-- 가전제품 소분류 (각 항목은 이름과 가격을 쉼표로 구분) -->
+    <string-array name="appliances_subcategories">
+        <item>TV,500.0</item>
+        <item>냉장고,800.0</item>
+    </string-array>
+</resources>
