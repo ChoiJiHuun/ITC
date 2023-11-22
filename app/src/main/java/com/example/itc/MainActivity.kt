@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import com.example.itc.databinding.ActivityMainBinding
-import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.common.util.Utility
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.AIButton.setOnClickListener{
-            val intent = Intent(this,PayActivity::class.java)
+            val intent = Intent(this,MapsActivity::class.java)
             startActivity(intent)
         }
 

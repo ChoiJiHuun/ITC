@@ -6,7 +6,6 @@ plugins {
 buildscript {
     val kotlin_version by extra("1.9.20")
     dependencies {
-        classpath ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
     repositories {
