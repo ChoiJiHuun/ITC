@@ -6,41 +6,47 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 
 interface ApiService {
     @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("/api/v1/wastes-info")
     fun mapUser(
-        @Field("user_email") waste_id: String,
-        @Field("login_type") user_email: String,
-        @Field("user_email") login_type: String,
-        @Field("login_type") location_latitude: String,
-        @Field("user_email") location_longtitude: String,
-        @Field("region_1depth_name") region_1depth_name: String,
-        @Field("region_2depth_namel") region_2depth_name: String,
-        @Field("region_3depth_name") region_3depth_name: String
+        @Field("wasteCode") wasteCode: String,
+        @Field("userEmail") userEmail: String,
+        @Field("loginType") loginType: String,
+        @Field("locationLatitude") locationLatitude: String,
+        @Field("locationLongitude") locationLongitude: String,
+        @Field("region1depthName") region1depthName: String,
+        @Field("region2depthName") region2depthName: String,
+        @Field("region3depthName") region3depthName: String
     ): Call<JoinResponse>
 
     class JoinData {
 
 
     }
-    class JoinResponse {
+    data class JoinResponse(
         @SerializedName("status")
-        val status = 0
+        val status: Int,
 
         @SerializedName("success")
-        private val success = false
+        val success: Boolean,
 
         @SerializedName("message")
-        val message: String? = null
+        val message: String?,
 
-        inner class Data {
+        @SerializedName("data")
+        val data: Data? // 이 부분이 추가되었습니다.
+    ) {
+        data class Data(
             @SerializedName("userId")
-            private val userId = 0
-        }
+            val userId: Int
+        )
     }
+
 
 }

@@ -4,14 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MapsActivity">
+
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:name="com.naver.maps.map.MapFragment" />
 
+    <!-- 아래에 추가할 버튼 -->
+    <Button
+        android:id="@+id/place_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="클릭하세요"
+        android:onClick="onButtonClick" />
 </LinearLayout>
 
 
