@@ -122,16 +122,19 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             val apiService = RetrofitInstance.apiService
 
             // mapUser 메서드 호출
-            val call = apiService.mapUser(
-                "00100101",
-                "jiwon405@naver.com",
-                "naver",
-                latitude.toString(),
-                longitude.toString(),
-                "인천시",
-                "미추홀구",
-                "용현동"
-            )
+             val call = apiService.mapUser(
+                 ApiService.PostResult(
+                     wasteCode = "0010101",
+                     userEmail = "jiwon405@naver.com",
+                     loginType = "kakao",
+                     locationLatitude = latitude,
+                     locationLongitude = longitude,
+                     region1depthName = "인천시",
+                     region2depthName = "미추홀구",
+                     region3depthName = "용현동"
+                 )
+             )
+
 
             call.enqueue(object : retrofit2.Callback<ApiService.JoinResponse> {
                 override fun onResponse(

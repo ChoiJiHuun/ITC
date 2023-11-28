@@ -53,9 +53,32 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.google.code.gson:gson:2.8.9")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-
-
-
-
-
+    implementation ("com.squareup.okhttp3:logging-interceptor:3.11.0")
+    implementation("com.navercorp.nid:oauth:5.8.0") // jdk 11
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.6.21")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    implementation ("androidx.legacy:legacy-support-core-utils:1.0.0")
+    implementation ("androidx.browser:browser:1.4.0")
+    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation ("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation ("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation ("androidx.fragment:fragment-ktx:1.3.6")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.11.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.2.1")
+    implementation ("com.airbnb.android:lottie:3.1.0")
+    implementation("androidx.media3:media3-common:1.2.0")
+    implementation ("com.kakao.sdk:v2-all:2.17.0") // 전체 모듈 설치, 2.11.0 버전부터 지원
+    implementation ("com.kakao.sdk:v2-user:2.17.0") // 카카오 로그인
+    implementation ("com.kakao.sdk:v2-talk:2.17.0") // 친구, 메시지(카카오톡)
+    implementation ("com.kakao.sdk:v2-story:2.17.0") // 카카오스토리
+    implementation ("com.kakao.sdk:v2-share:2.17.0") // 메시지(카카오톡 공유)
+    implementation ("com.kakao.sdk:v2-friend:2.17.0") // 카카오톡 소셜 피커, 리소스 번들 파일 포함
+    implementation ("com.kakao.sdk:v2-navi:2.17.0") // 카카오내비
+    implementation ("com.kakao.sdk:v2-cert:2.17.0") // 카카오 인증서비스
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
 }
