@@ -39,8 +39,6 @@ class StartActivity : AppCompatActivity() {
         val binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.NaverButton.visibility = View.VISIBLE
-
 
         binding.KakaoButton.setOnClickListener {
             KaKaoLogin()

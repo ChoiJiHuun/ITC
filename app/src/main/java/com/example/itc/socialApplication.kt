@@ -2,6 +2,8 @@ package com.example.itc
 
 import android.app.Application
 import android.os.Bundle
+import com.kakao.sdk.common.KakaoSdk
+import com.navercorp.nid.NaverIdLoginSDK
 
 class socialApplication : Application() {
 
