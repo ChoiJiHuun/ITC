@@ -48,7 +48,6 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun KaKaoLogin() {
-        Thread{
         val intent = Intent(this,MainActivity::class.java)
             UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
            if (error != null) {
@@ -143,7 +142,6 @@ class StartActivity : AppCompatActivity() {
 
             }
         }*/
-        }.start()
     }
 
     private fun naverLogin(){
