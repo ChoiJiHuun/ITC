@@ -41,8 +41,6 @@ class StartActivity : AppCompatActivity() {
 
         binding.NaverButton.visibility = View.VISIBLE
 
-        NaverIdLoginSDK.initialize(this, "uiSZHhgKCsMAUexpoDfY", "wCqsDtq_Cm", "ITC")
-        KakaoSdk.init(this, "ddbb22dc00845a1d661212c964be0a81")
 
         binding.KakaoButton.setOnClickListener {
             KaKaoLogin()
@@ -51,9 +49,6 @@ class StartActivity : AppCompatActivity() {
             naverLogin()
         }
     }
-
-
-
 
     private fun KaKaoLogin() {
         Thread{
