@@ -49,6 +49,7 @@ class StartActivity : AppCompatActivity() {
 
     private fun KaKaoLogin() {
         val intent = Intent(this,MainActivity::class.java)
+
             UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
            if (error != null) {
                 Log.e(TAG, "로그인 실패", error)
