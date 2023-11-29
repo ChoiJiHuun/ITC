@@ -2,32 +2,19 @@ package com.example.itc
 
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.itc.databinding.ActivityStartBinding
-import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.*
-import com.kakao.sdk.auth.model.Prompt
-import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
-import com.kakao.sdk.common.model.KakaoSdkError
-import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
-import androidx.viewpager2.widget.ViewPager2
-import com.example.itc.databinding.ActivityMainBinding
 
 
 class StartActivity : AppCompatActivity() {
@@ -49,8 +36,7 @@ class StartActivity : AppCompatActivity() {
 
     private fun KaKaoLogin() {
         val intent = Intent(this,MainActivity::class.java)
-
-            UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
+        UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
            if (error != null) {
                 Log.e(TAG, "로그인 실패", error)
             }
