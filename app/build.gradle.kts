@@ -54,7 +54,7 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.8.9")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:3.11.0")
-    implementation("com.navercorp.nid:oauth:5.8.0") // jdk 11
+    implementation("com.navercorp.nid:oauth:5.9.0") // jdk 11
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.6.21")

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +31,9 @@ import com.example.itc.databinding.ActivityMainBinding
 
 
 class StartActivity : AppCompatActivity() {
+    private val TAG = "StartActivity"
+
+    private val mainHandler = Handler(Looper.getMainLooper())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityStartBinding.inflate(layoutInflater)
@@ -47,20 +52,11 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    private inner class KaKaoLoginTask : AsyncTask<Void, Void, Unit>() {
-        override fun doInBackground(vararg params: Void?) {
-            KaKaoLogin()
-        }
-    }
 
-    private inner class NaverLoginTask : AsyncTask<Void, Void, Unit>() {
-        override fun doInBackground(vararg params: Void?) {
-            naverLogin()
-        }
-    }
 
 
     private fun KaKaoLogin() {
+        Thread{
         val intent = Intent(this,MainActivity::class.java)
 
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
@@ -81,6 +77,7 @@ class StartActivity : AppCompatActivity() {
                 /*val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))*/
             }
+
         }
 
 // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
@@ -147,10 +144,11 @@ class StartActivity : AppCompatActivity() {
 
             }
         }*/
-
+        }.start()
     }
 
     private fun naverLogin(){
+        Thread {
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
                 // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
@@ -171,10 +169,11 @@ class StartActivity : AppCompatActivity() {
             }
             override fun onError(errorCode: Int, message: String) {
                 onFailure(errorCode, message)
-            }
+            }  //
         }
 
 
         NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
+        }.start()
     }
 }
