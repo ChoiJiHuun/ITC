@@ -59,12 +59,22 @@ class StartActivity : AppCompatActivity() {
         Thread{
         val intent = Intent(this,MainActivity::class.java)
 
+            UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
+           if (error != null) {
+                Log.e(TAG, "로그인 실패", error)
+            }
+            else if (token != null) {
+                Log.i(TAG, "로그인 성공 ${token.accessToken}")
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            }
+        }
+
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 Log.e(TAG,"로그인 안되어있음",error)
             }
             else if (tokenInfo != null) {
-                startActivity(intent)
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
         }
@@ -74,8 +84,7 @@ class StartActivity : AppCompatActivity() {
                 Log.e(TAG, "카카오계정으로 로그인 실패", error)
             } else if (token != null) {
                 Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
-                /*val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))*/
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
             }
 
         }
@@ -96,8 +105,7 @@ class StartActivity : AppCompatActivity() {
                     UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
                 } else if (token != null) {
                     Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
-                    /*val intent = Intent(this,MainActivity::class.java)
-                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))*/
+                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 }
             }
         } else {
