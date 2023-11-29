@@ -43,7 +43,7 @@ class StartActivity : AppCompatActivity() {
             KaKaoLogin()
         }
         binding.NaverButton.setOnClickListener{
-            naverLogin()
+            naverLogin() // jhlhljh
         }
     }
 
