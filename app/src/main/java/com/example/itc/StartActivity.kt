@@ -31,7 +31,6 @@ import com.example.itc.databinding.ActivityMainBinding
 
 
 class StartActivity : AppCompatActivity() {
-    private val TAG = "StartActivity"
 
     private val mainHandler = Handler(Looper.getMainLooper())
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +50,6 @@ class StartActivity : AppCompatActivity() {
     private fun KaKaoLogin() {
         Thread{
         val intent = Intent(this,MainActivity::class.java)
-
             UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
            if (error != null) {
                 Log.e(TAG, "로그인 실패", error)
