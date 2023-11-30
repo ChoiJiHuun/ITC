@@ -12,4 +12,6 @@ class socialApplication : Application() {
         NaverIdLoginSDK.initialize(this, "uiSZHhgKCsMAUexpoDfY", "wCqsDtq_Cm", "ITC")
         KakaoSdk.init(this, "ddbb22dc00845a1d661212c964be0a81")
     }
+
+
 }

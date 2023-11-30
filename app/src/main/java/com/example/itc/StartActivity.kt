@@ -2,19 +2,32 @@ package com.example.itc
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.os.AsyncTask
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.itc.databinding.ActivityStartBinding
+import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.*
+import com.kakao.sdk.auth.model.Prompt
+import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
+import com.kakao.sdk.common.model.KakaoSdkError
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
+import androidx.viewpager2.widget.ViewPager2
+import com.example.itc.databinding.ActivityMainBinding
 
 
 class StartActivity : AppCompatActivity() {
@@ -24,49 +37,26 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         binding.KakaoButton.setOnClickListener {
             KaKaoLogin()
         }
         binding.NaverButton.setOnClickListener{
-            naverLogin() // jhlhljh
+            naverLogin()
         }
     }
 
     private fun KaKaoLogin() {
         val intent = Intent(this,MainActivity::class.java)
-        UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
-           if (error != null) {
-                Log.e(TAG, "로그인 실패", error)
-            }
-            else if (token != null) {
-                Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-            }
-        }
-
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                Log.e(TAG,"로그인 안되어있음",error)
-            }
-            else if (tokenInfo != null) {
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                finish()
-            }
-        }
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 Log.e(TAG, "카카오계정으로 로그인 실패", error)
             } else if (token != null) {
                 Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                startActivity(intent)
             }
-
         }
 
-// 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
             UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
                 if (error != null) {
@@ -82,25 +72,26 @@ class StartActivity : AppCompatActivity() {
                     UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
                 } else if (token != null) {
                     Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
-                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+
                 }
             }
         } else {
             UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
-/*
-        UserApiClient.instance.loginWithKakaoAccount(
-            this,
-            prompts = listOf(Prompt.SELECT_ACCOUNT)
-        ) { token, error ->
-            if (error != null) {
-                Log.e(TAG, "로그인 실패", error)
-            } else if (token != null) {
-                Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                /*val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))*/
-            }
-        }*/
+
+        /*
+                UserApiClient.instance.loginWithKakaoAccount(
+                    this,
+                    prompts = listOf(Prompt.SELECT_ACCOUNT)
+                ) { token, error ->
+                    if (error != null) {
+                        Log.e(TAG, "로그인 실패", error)
+                    } else if (token != null) {
+                        Log.i(TAG, "로그인 성공 ${token.accessToken}")
+                        /*val intent = Intent(this,MainActivity::class.java)
+                        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))*/
+                    }
+                }*/
 
 /*
         val properties = mapOf("CUSTOM_PROPERTY_KEY" to "CUSTOM_PROPERTY_VALUE")
