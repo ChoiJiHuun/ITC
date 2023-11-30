@@ -31,24 +31,11 @@ import com.example.itc.databinding.ActivityMainBinding
 
 
 class StartActivity : AppCompatActivity() {
-
-    private val mainHandler = Handler(Looper.getMainLooper())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val intent = Intent(this,MainActivity::class.java)
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                Log.e(TAG, "토큰 정보 보기 실패", error)
-            }
-            else if (tokenInfo != null) {
-                Log.i(TAG, "토큰 정보 보기 성공" +
-                        "\n회원번호: ${tokenInfo.id}" +
-                        "\n만료시간: ${tokenInfo.expiresIn} 초")
-            }
-            startActivity(intent)
-        }
 
         binding.KakaoButton.setOnClickListener {
             KaKaoLogin()
@@ -59,7 +46,22 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun KaKaoLogin() {
+
         val intent = Intent(this,MainActivity::class.java)
+
+        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+            if (error != null) {
+                Log.e(TAG, "토큰 정보 보기 실패", error)
+                finish()
+            } else if (tokenInfo != null) {
+                Log.i(
+                    TAG, "토큰 정보 보기 성공" +
+                            "\n회원번호: ${tokenInfo.id}" +
+                            "\n만료시간: ${tokenInfo.expiresIn} 초"
+                )
+                startActivity(intent)
+            }
+        }
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
@@ -70,7 +72,8 @@ class StartActivity : AppCompatActivity() {
             }
         }
 
-        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
             UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
                 if (error != null) {
                     Log.e(TAG, "카카오톡으로 로그인 실패", error)
@@ -136,7 +139,6 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun naverLogin(){
-        Thread {
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
                 // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
@@ -162,6 +164,5 @@ class StartActivity : AppCompatActivity() {
 
 
         NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
-        }.start()
     }
 }
