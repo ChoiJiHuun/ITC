@@ -9,17 +9,17 @@
 
     <ImageButton
         android:id="@+id/Naver_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="382dp"
+        android:layout_height="66dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="24dp"
         android:contentDescription="버튼의 기능 설명"
         android:enabled="true"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/Kakao_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/naver_custonn" />
 
