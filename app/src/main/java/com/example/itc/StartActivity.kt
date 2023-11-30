@@ -40,14 +40,16 @@ class StartActivity : AppCompatActivity() {
         val intent = Intent(this,MainActivity::class.java)
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
+                Log.e(TAG, "토큰 정보 보기 실패", error)
             }
             else if (tokenInfo != null) {
                 Log.i(TAG, "토큰 정보 보기 성공" +
                         "\n회원번호: ${tokenInfo.id}" +
                         "\n만료시간: ${tokenInfo.expiresIn} 초")
-                startActivity(intent)
             }
+            startActivity(intent)
         }
+
         binding.KakaoButton.setOnClickListener {
             KaKaoLogin()
         }
@@ -90,16 +92,16 @@ class StartActivity : AppCompatActivity() {
             UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
 
-        /* (error != null) {
-                        Log.e(TAG, "로그인 실패", error)
-                    } else if (token != null) {
-                        Log.i(TAG, "로그인 성공 ${token.accessToken}")
-
+        /*
                 UserApiClient.instance.loginWithKakaoAccount(
                     this,
                     prompts = listOf(Prompt.SELECT_ACCOUNT)
                 ) { token, error ->
-                    if                /*val intent = Intent(this,MainActivity::class.java)
+                    if (error != null) {
+                        Log.e(TAG, "로그인 실패", error)
+                    } else if (token != null) {
+                        Log.i(TAG, "로그인 성공 ${token.accessToken}")
+                        /*val intent = Intent(this,MainActivity::class.java)
                         startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))*/
                     }
                 }*/
@@ -147,9 +149,6 @@ class StartActivity : AppCompatActivity() {
 
                 val intent = Intent(this@StartActivity , MainActivity::class.java)
                 startActivity(intent)
-
-
-
             }
             override fun onFailure(httpStatus: Int, message: String) {
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
