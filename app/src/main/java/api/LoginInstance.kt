@@ -15,5 +15,5 @@ object LoginInstance {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val apiService: ApiService = retrofit.create(ApiService::class.java)
+    val apiService: LoginApi = retrofit.create(LoginApi::class.java)
 }

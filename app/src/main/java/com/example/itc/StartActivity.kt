@@ -27,7 +27,12 @@ import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import androidx.viewpager2.widget.ViewPager2
+import api.ApiService
+import api.LoginApi
+import api.LoginInstance
+import api.RetrofitInstance
 import com.example.itc.databinding.ActivityMainBinding
+import retrofit2.Call
 
 
 class StartActivity : AppCompatActivity() {
@@ -46,7 +51,7 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun KaKaoLogin() {
-
+        val type = "kakao"
         val intent = Intent(this,MainActivity::class.java)
 
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
@@ -59,15 +64,30 @@ class StartActivity : AppCompatActivity() {
                             "\n회원번호: ${tokenInfo.id}" +
                             "\n만료시간: ${tokenInfo.expiresIn} 초"
                 )
+
                 startActivity(intent)
             }
         }
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+
             if (error != null) {
                 Log.e(TAG, "카카오계정으로 로그인 실패", error)
             } else if (token != null) {
                 Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
+                val toke = token.accessToken.toString()
+                UserApiClient.instance.me { user, error ->
+                    if (error != null) {
+                        Log.e(TAG, "사용자 정보 요청 실패", error)
+                    }
+                    else if (user != null) {
+                        Log.i(TAG, "사용자 정보 요청 성공" +
+                                "\n회원번호: ${user.id}" +
+                                "\n이메일: ${user.kakaoAccount?.email}")
+                        val em = user.kakaoAccount?.email
+                        sendApiRequest(em.toString(),type.toString(),toke)
+                    }
+                }
                 startActivity(intent)
             }
         }
@@ -94,7 +114,6 @@ class StartActivity : AppCompatActivity() {
         } else {
             UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
-
         /*
                 UserApiClient.instance.loginWithKakaoAccount(
                     this,
@@ -137,7 +156,44 @@ class StartActivity : AppCompatActivity() {
             }
         }*/
     }
+    private fun sendApiRequest(userEmail : String,logintype : String , accessToken : String) {
+        // Retrofit을 사용하여 서버에 API 요청 보내기
+        // (이 부분은 이미 작성된 코드를 사용)
+        // RetrofitInstance를 사용하여 ApiService 인터페이스의 구현체 생성
+        val apiService = LoginInstance.apiService
 
+        // mapUser 메서드 호출
+        val call = apiService.LoginUser(
+            LoginApi.PostResults(
+                userEmail = userEmail,
+                loginType = logintype,
+                accessToken =  accessToken
+            )
+        )
+
+
+        call.enqueue(object : retrofit2.Callback<LoginApi.LoginResponse> {
+            override fun onResponse(
+                call: Call<LoginApi.LoginResponse>,
+                response: retrofit2.Response<LoginApi.LoginResponse>
+            ) {
+                val statusCode = response.code() // 응답 코드를 가져옵니다.
+
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    // 서버 응답을 처리합니다.
+                } else {
+                    // 서버 응답이 실패한 경우
+                    Log.d("log", "Fail with status code: $statusCode")
+                }
+            }
+
+            override fun onFailure(call: Call<LoginApi.LoginResponse>, t: Throwable) {
+                // 네트워크 요청이 실패한 경우
+                Log.d("log", "Fail: ${t.message}")
+            }
+        })
+    }
     private fun naverLogin(){
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
