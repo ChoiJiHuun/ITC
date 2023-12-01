@@ -165,9 +165,9 @@ class StartActivity : AppCompatActivity() {
         // mapUser 메서드 호출
         val call = apiService.LoginUser(
             LoginApi.PostResults(
-                userEmail = userEmail,
+                userEmail = "jiwon405@gmail.com",
                 loginType = logintype,
-                accessToken =  accessToken
+                accessToken =  "sdokgerkpon254GzX"
             )
         )
 
